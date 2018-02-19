@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="createTypes" author="konriz">
+        <createTable tableName="tastes">
+            <column name="tasteID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="taste" type="varchar(50)"></column>
+        </createTable>
+        <createTable tableName="colours">
+            <column name="colourID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="colour" type="varchar(20)"></column>
+        </createTable>
+        <createTable tableName="countries">
+            <column name="countryID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="country" type="varchar(50)"></column>
+        </createTable>
+        <createTable tableName="brands">
+            <column name="brandID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="brand" type="varchar(255)"></column>
+        </createTable>
+        <createTable tableName="grapes">
+            <column name="grapesID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="grapes" type="varchar(100)"></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="createWines" author="konriz">
+        <createTable tableName="wines">
+            <column name="wineID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="grapesID" type="int">
+                <constraints foreignKeyName="fk_grapesID" references="grapes(grapesID)"></constraints>
+            </column>
+            <column name="brandID" type="int">
+                <constraints foreignKeyName="fk_brandID" references="brands(brandID)"></constraints>
+            </column>
+            <column name="countryID" type="int">
+                <constraints foreignKeyName="fk_countryID" references="countries(countryID)"></constraints>
+            </column>
+            <column name="year" type="int"></column>
+            <column name="tasteID" type="int">
+                <constraints foreignKeyName="fk_tasteID" references="tastes(tasteID)"></constraints>
+            </column>
+            <column name="colourID" type="int">
+                <constraints foreignKeyName="fk_colourID" references="colours(colourID)"></constraints>
+            </column>
+            <column name="alcohol" type="decimal(3,1)"></column>
+            <column name="volume" type="decimal(6,1)"></column>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
