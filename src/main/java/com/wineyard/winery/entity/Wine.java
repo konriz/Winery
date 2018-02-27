@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Setter
 public class Wine {
 
+    // TODO do this one to many shit!ææ
+
     @Id
     @GeneratedValue
     private Integer wineID;

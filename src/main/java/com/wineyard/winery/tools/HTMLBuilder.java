@@ -15,11 +15,11 @@ public class HTMLBuilder {
                     "</head>" +
                     "<body>";
 
-    private static final String HTMLEnd = "<h3><a href=\"/\">Go back!</a></h3>" +
+    private static final String HTMLEnd = "<h3><a href=\"/\">Home</a></h3>" +
             "</body>" +
             "</html>";
 
-    private static String addElement(Wine wine) {
+    private static String addWine(Wine wine) {
         String name = wine.getName();
         String colour = "N/A";
         String taste = "N/A";
@@ -37,22 +37,42 @@ public class HTMLBuilder {
         return String.format("<p>%s : %s, %s", name, colour, taste);
     }
 
-    public static String getHTML(List<Wine> winesList)
+    public static String getWinesHTML(List<Wine> winesList)
     {
-        String html = HTMLStart;
+        StringBuffer html = new StringBuffer();
+        html.append(HTMLStart.toString());
         if(winesList.size() > 1)
         {
             for(Wine wine : winesList)
             {
-                html += addElement(wine);
+                html.append(addWine(wine));
             }
         }
         else
         {
-            html += "<p>No wine of this type!</p>";
+            html.append("<p>No wine of this type!</p>");
         }
 
-        html += HTMLEnd;
-        return html;
+        html.append(HTMLEnd);
+        return html.toString();
     }
+
+    public static String getError()
+    {
+        StringBuffer html = new StringBuffer();
+        html.append(HTMLStart);
+        html.append("<h2>Something went wrong!</h2>");
+        html.append(HTMLEnd);
+        return html.toString();
+    }
+
+    public static String getNoWine()
+    {
+        StringBuffer html = new StringBuffer();
+        html.append(HTMLStart);
+        html.append("<h2>No wine of such type!</h2>");
+        html.append(HTMLEnd);
+        return html.toString();
+    }
+
 }

@@ -4,7 +4,7 @@ Factory
 klasa biznesowa
 aspekty, metody aspektowe
 cykl życia encji
-bin
+bean
 adnotacje @Service, @Component, @Controller, @Repository
 Obiekt DTO - uproszczona encja
     select new com.package.SimpleDTO(o.id, o.name) from Entity o;

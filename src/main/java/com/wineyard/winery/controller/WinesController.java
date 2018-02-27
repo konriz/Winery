@@ -1,14 +1,16 @@
 package com.wineyard.winery.controller;
 
+import com.wineyard.winery.entity.Brand;
 import com.wineyard.winery.entity.Colour;
 import com.wineyard.winery.entity.Taste;
-import com.wineyard.winery.entity.Wine;
+import com.wineyard.winery.repository.BrandRepository;
 import com.wineyard.winery.repository.WineRepository;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/wines")
@@ -17,11 +19,20 @@ public class WinesController {
     @Autowired
     private WineRepository wineRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
     // JSON mapping
 
 //    @GetMapping
 //    public List<Wine> getWines() {
 //        return wineRepository.findAll();
+//    }
+
+//    @RequestMapping("/brands")
+//    public List<Brand> getBrands()
+//    {
+//        return brandRepository.findAll();
 //    }
 
 //    @RequestMapping("/tastes/{taste}")
@@ -54,19 +65,32 @@ public class WinesController {
 
     @GetMapping
     public String getWines() {
-        return HTMLBuilder.getHTML(wineRepository.findAll());
+        return HTMLBuilder.getWinesHTML(wineRepository.findAll());
     }
+
+    @RequestMapping("/brands")
+    public List<Brand> getBrand()
+    {
+        return brandRepository.findAll();
+    }
+
+    @RequestMapping("/brands/{id}")
+    public Brand getBrand(@PathVariable("id") Integer id)
+    {
+        return brandRepository.findOne(id);
+    }
+
 
     @RequestMapping("/tastes/{taste}")
     public String getTastes(@PathVariable("taste") String taste)
     {
         try
         {
-            return HTMLBuilder.getHTML(wineRepository.findByTasteID(Taste.valueOf(taste.toUpperCase())));
+            return HTMLBuilder.getWinesHTML(wineRepository.findByTasteID(Taste.valueOf(taste.toUpperCase())));
         }
         catch (IllegalArgumentException e)
         {
-            return HTMLBuilder.getHTML(wineRepository.findByTasteID(Taste.NONE));
+            return HTMLBuilder.getNoWine();
         }
     }
 
@@ -75,11 +99,11 @@ public class WinesController {
     {
         try
         {
-            return HTMLBuilder.getHTML(wineRepository.findByColourID(Colour.valueOf(colour.toUpperCase())));
+            return HTMLBuilder.getWinesHTML(wineRepository.findByColourID(Colour.valueOf(colour.toUpperCase())));
         }
         catch (IllegalArgumentException e)
         {
-            return HTMLBuilder.getHTML(wineRepository.findByColourID(Colour.NONE));
+            return HTMLBuilder.getNoWine();
         }
     }
 
