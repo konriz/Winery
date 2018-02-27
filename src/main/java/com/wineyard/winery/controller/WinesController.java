@@ -82,11 +82,11 @@ public class WinesController {
 
 
     @RequestMapping("/tastes/{taste}")
-    public String getTastes(@PathVariable("taste") String taste)
+    public String getTastes(@PathVariable("taste") Integer taste)
     {
         try
         {
-            return HTMLBuilder.getWinesHTML(wineRepository.findByTasteID(Taste.valueOf(taste.toUpperCase())));
+            return HTMLBuilder.getWinesHTML(wineRepository.findByTasteID(taste));
         }
         catch (IllegalArgumentException e)
         {
@@ -95,11 +95,11 @@ public class WinesController {
     }
 
     @RequestMapping("/colours/{colour}")
-    public String getColours(@PathVariable("colour") String colour)
+    public String getColours(@PathVariable("colour") Integer colour)
     {
         try
         {
-            return HTMLBuilder.getWinesHTML(wineRepository.findByColourID(Colour.valueOf(colour.toUpperCase())));
+            return HTMLBuilder.getWinesHTML(wineRepository.findByColourID(colour));
         }
         catch (IllegalArgumentException e)
         {

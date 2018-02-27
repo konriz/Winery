@@ -21,20 +21,21 @@ public class HTMLBuilder {
 
     private static String addWine(Wine wine) {
         String name = wine.getName();
+        String brand = wine.getBrand().getBrand();
         String colour = "N/A";
         String taste = "N/A";
 
         try
         {
-            taste = wine.getTasteID().name();
+            taste = wine.getTaste().getTaste();
         } catch (NullPointerException e) {}
 
         try
         {
-            colour = wine.getColourID().name();
+            colour = wine.getColour().getColour();
         } catch (NullPointerException e) {}
 
-        return String.format("<p>%s : %s, %s", name, colour, taste);
+        return String.format("<p><b>%s</b> %s : %s, %s", brand, name, colour, taste);
     }
 
     public static String getWinesHTML(List<Wine> winesList)
