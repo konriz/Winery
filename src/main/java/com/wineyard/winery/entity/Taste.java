@@ -5,12 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
-//public enum Taste {
-//
-//    NONE, DRY, MEDIUM_DRY, MEDIUM_SWEET, SWEET;
-//
-//}
 @Entity
 @Table(name = "tastes")
 @Setter
@@ -22,6 +18,6 @@ public class Taste
     private Integer tasteID;
     private String taste;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "taste")
-    private Collection<Wine> wines;
+    @OneToMany(mappedBy = "taste")
+    private List<Wine> wines;
 }

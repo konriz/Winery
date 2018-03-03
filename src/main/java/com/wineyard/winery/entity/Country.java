@@ -18,7 +18,7 @@ public class Country {
     private int countryID;
     private String country;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
-    private Collection<Wine> wines;
+    @OneToMany(mappedBy = "country")
+    private List<Wine> wines;
 
 }

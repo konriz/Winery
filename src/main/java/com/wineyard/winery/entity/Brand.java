@@ -19,8 +19,8 @@ public class Brand {
     private Integer brandID;
     private String brand;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "brand")
-    private Collection<Wine> wines;
+    @OneToMany(mappedBy = "brand")
+    private List<Wine> wines;
 
 
 }
