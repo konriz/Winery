@@ -1,5 +1,6 @@
 package com.wineyard.winery.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,6 @@ public class Colour {
     private String colour;
 
     @OneToMany(mappedBy = "colour")
+    @JsonIgnore
     private List<Wine> wines;
 }

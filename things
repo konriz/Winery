@@ -6,12 +6,7 @@ aspekty, metody aspektowe
 cykl życia encji
 bean
 adnotacje @Service, @Component, @Controller, @Repository
-Obiekt DTO - uproszczona encja
-    select new com.package.SimpleDTO(<konstruktor>o.id, o.name) from <adres?>Entity o;
-        // o has many fielda, DTO gets only few fields
-projekcja
 Spring Security
 LDAP
-widoki bazodanowe
 zamiast @Entity encja stworzona jako @Subselect
 sql : LAG ... OVER
