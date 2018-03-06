@@ -1,9 +1,6 @@
 package com.wineyard.winery.controller;
 
-import com.wineyard.winery.entity.Brand;
-import com.wineyard.winery.entity.Grapes;
-import com.wineyard.winery.entity.Wine;
-import com.wineyard.winery.entity.WineDTO;
+import com.wineyard.winery.entity.*;
 import com.wineyard.winery.repository.WineRepository;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,31 +29,52 @@ public class WinesController {
     private EntityManager entityManager;
 
     @GetMapping
-    public String getWines() {
+    public String getWinesHTML() {
         return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
     @RequestMapping("/tastes/{taste}")
-    public String getDTObyTaste(@PathVariable("taste") String taste)
+    public String getDTObyTasteHTML(@PathVariable("taste") String taste)
     {
         return HTMLBuilder.getWinesHTML(taste, wineRepository.findDTObyTaste(taste));
     }
 
+    @RequestMapping("/tastes")
+    public List<Taste> getTastes()
+    {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Object> cq = cb.createQuery();
+        Root<Taste> from = cq.from(Taste.class);
+
+        CriteriaQuery<Object> select = cq.select(from);
+        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+        List<Object> resultList = typedQuery.getResultList();
+
+        List<Taste> returnList = new ArrayList<>();
+        for(Object o : resultList)
+        {
+            returnList.add((Taste) o);
+        }
+        return returnList;
+    }
+
     @RequestMapping("/colours/{colour}")
-    public String getDTObyColour(@PathVariable("colour") String colour)
+    public String getDTObyColourHTML(@PathVariable("colour") String colour)
     {
         return HTMLBuilder.getWinesHTML(colour, wineRepository.findDTObyColour(colour));
     }
 
-    @RequestMapping("/pages")
-    public List<Wine> getWinesPaged()
+    @RequestMapping("/all")
+    public List<Wine> getWines()
     {
         return wineRepository.findAll();
     }
 
+    //TODO urls for getting other categories
 
-    @RequestMapping("/api")
-    public List<Grapes> getDTOs()
+    @RequestMapping("/grapes")
+    public List<Grapes> getGrapes()
     {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
