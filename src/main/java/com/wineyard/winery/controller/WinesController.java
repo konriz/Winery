@@ -33,13 +33,13 @@ public class WinesController {
         return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
-    @RequestMapping("/tastes/{taste}")
+    @RequestMapping("/taste/{taste}")
     public String getDTObyTasteHTML(@PathVariable("taste") String taste)
     {
         return HTMLBuilder.getWinesHTML(taste, wineRepository.findDTObyTaste(taste));
     }
 
-    @RequestMapping("/tastes")
+    @RequestMapping("/taste")
     public List<Taste> getTastes()
     {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -59,10 +59,30 @@ public class WinesController {
         return returnList;
     }
 
-    @RequestMapping("/colours/{colour}")
+    @RequestMapping("/colour/{colour}")
     public String getDTObyColourHTML(@PathVariable("colour") String colour)
     {
         return HTMLBuilder.getWinesHTML(colour, wineRepository.findDTObyColour(colour));
+    }
+
+    @RequestMapping("/colour")
+    public List<Colour> getColours()
+    {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Object> cq = cb.createQuery();
+        Root<Colour> from = cq.from(Colour.class);
+
+        CriteriaQuery<Object> select = cq.select(from);
+        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+        List<Object> resultList = typedQuery.getResultList();
+
+        List<Colour> returnList = new ArrayList<>();
+        for(Object o : resultList)
+        {
+            returnList.add((Colour) o);
+        }
+        return returnList;
     }
 
     @RequestMapping("/all")
@@ -90,9 +110,47 @@ public class WinesController {
         {
             returnList.add((Grapes) o);
         }
-
         return returnList;
+    }
 
+    @RequestMapping("/brand")
+    public List<Brand> getBrands()
+    {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Object> cq = cb.createQuery();
+        Root<Brand> from = cq.from(Brand.class);
+
+        CriteriaQuery<Object> select = cq.select(from);
+        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+        List<Object> resultList = typedQuery.getResultList();
+
+        List<Brand> returnList = new ArrayList<>();
+        for(Object o : resultList)
+        {
+            returnList.add((Brand) o);
+        }
+        return returnList;
+    }
+
+    @RequestMapping("/country")
+    public List<Country> getCountries()
+    {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Object> cq = cb.createQuery();
+        Root<Country> from = cq.from(Country.class);
+
+        CriteriaQuery<Object> select = cq.select(from);
+        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+        List<Object> resultList = typedQuery.getResultList();
+
+        List<Country> returnList = new ArrayList<>();
+        for(Object o : resultList)
+        {
+            returnList.add((Country) o);
+        }
+        return returnList;
     }
 
 }
