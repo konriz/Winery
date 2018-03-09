@@ -2,6 +2,7 @@ package com.wineyard.winery.tools;
 
 import com.wineyard.winery.entity.Wine;
 import com.wineyard.winery.entity.WineDTO;
+import com.wineyard.winery.exceptions.NoItemException;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class HTMLBuilder {
     {
         StringBuilder html = new StringBuilder();
         html.append(HTMLStart(wineCategory));
-        if(winesList.size() > 1)
+        if(winesList.size() > 0)
         {
             for(WineDTO wine : winesList)
             {
@@ -72,15 +73,6 @@ public class HTMLBuilder {
             html.append(getNoWine());
         }
 
-        html.append(HTMLEnd);
-        return html.toString();
-    }
-
-    public static String getError()
-    {
-        StringBuilder html = new StringBuilder();
-        html.append(HTMLHeader);
-        html.append("<h2>Something went wrong!</h2>");
         html.append(HTMLEnd);
         return html.toString();
     }

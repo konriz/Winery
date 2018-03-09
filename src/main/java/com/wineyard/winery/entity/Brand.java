@@ -24,5 +24,11 @@ public class Brand {
     @JsonIgnore
     private List<Wine> wines;
 
+    private Brand() {}
+
+    public Brand(final String brand)
+    {
+        this.brand = brand;
+    }
 
 }

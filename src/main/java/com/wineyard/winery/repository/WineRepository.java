@@ -33,13 +33,4 @@ public interface WineRepository extends JpaRepository<Wine, Integer>{
             "left join w.brand b " +
             "where w.colour.colour = :colour")
     List<WineDTO> findDTObyColour(@Param("colour") String colour);
-
-    @Query("select new com.wineyard.winery.entity.WineDTO(w.name, w.taste.taste, w.colour.colour, b.brand) " +
-            "from Wine w " +
-            "left join w.colour c " +
-            "left join w.taste t " +
-            "left join w.brand b " +
-            "where w.brand.brand = :brand")
-    List<WineDTO> findDTObyBrand(@Param("brand") String brand);
-
 }

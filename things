@@ -2,7 +2,6 @@ batch size
 polimorfizm
 Factory
 klasa biznesowa
-aspekty, metody aspektowe
 cykl życia encji
 bean
 adnotacje @Service, @Component, @Controller, @Repository
@@ -10,3 +9,10 @@ Spring Security
 LDAP
 zamiast @Entity encja stworzona jako @Subselect
 sql : LAG ... OVER
+
+projekcja
+ControllerAdvise
+aspekty, metody aspektowe
+
+logger zapinamy adnotacją @Slf4j
+wywołanie log. xxx

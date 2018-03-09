@@ -1,6 +1,8 @@
 package com.wineyard.winery.controller;
 
 import com.wineyard.winery.entity.*;
+import com.wineyard.winery.exceptions.NoItemException;
+import com.wineyard.winery.repository.BrandRepository;
 import com.wineyard.winery.repository.WineRepository;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,15 @@ public class WinesController {
     @Autowired
     private WineRepository wineRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @GetMapping
     public String getWinesHTML() {
-        return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
+            return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
     @RequestMapping("/taste/{taste}")
@@ -116,21 +121,14 @@ public class WinesController {
     @RequestMapping("/brand")
     public List<Brand> getBrands()
     {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        return brandRepository.findAll();
+    }
 
-        CriteriaQuery<Object> cq = cb.createQuery();
-        Root<Brand> from = cq.from(Brand.class);
-
-        CriteriaQuery<Object> select = cq.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<Object> resultList = typedQuery.getResultList();
-
-        List<Brand> returnList = new ArrayList<>();
-        for(Object o : resultList)
-        {
-            returnList.add((Brand) o);
-        }
-        return returnList;
+    @RequestMapping(value = "/brand", method = RequestMethod.POST)
+    public void addBrand(@RequestParam(name = "brand") String input)
+    {
+        Brand brand = new Brand(input);
+        brandRepository.save(brand);
     }
 
     @RequestMapping("/country")
@@ -151,6 +149,12 @@ public class WinesController {
             returnList.add((Country) o);
         }
         return returnList;
+    }
+
+    @RequestMapping("/error")
+    public void getError() throws NoItemException
+    {
+        throw new NoItemException();
     }
 
 }
