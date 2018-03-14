@@ -16,4 +16,11 @@ public class Grapes {
     private Integer grapesID;
     private String grapes;
 
+    public Grapes(){}
+
+    public Grapes(String grapes)
+    {
+        this.grapes = grapes;
+    }
+
 }

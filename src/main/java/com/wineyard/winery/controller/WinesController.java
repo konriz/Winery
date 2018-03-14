@@ -4,12 +4,10 @@ import com.wineyard.winery.entity.*;
 import com.wineyard.winery.exceptions.NoItemException;
 import com.wineyard.winery.repository.BrandRepository;
 import com.wineyard.winery.repository.CountryRepository;
+import com.wineyard.winery.repository.GrapesRepository;
 import com.wineyard.winery.repository.WineRepository;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -20,7 +18,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/wines")
@@ -34,6 +31,9 @@ public class WinesController {
 
     @Autowired
     private CountryRepository countryRepository;
+
+    @Autowired
+    private GrapesRepository grapesRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -107,7 +107,7 @@ public class WinesController {
         return wineRepository.findAll();
     }
 
-    //TODO urls for getting other categories
+    // Grapes part
 
     @RequestMapping("/grapes")
     public List<Grapes> getGrapes()
@@ -129,6 +129,14 @@ public class WinesController {
         return returnList;
     }
 
+    @RequestMapping(value = "/grapes", method = RequestMethod.POST)
+    public void addGrapes(@RequestParam(name = "grapes") String input)
+    {
+       grapesRepository.save(new Grapes(input));
+    }
+
+    // Brands part
+
     @RequestMapping("/brand")
     public List<Brand> getBrands()
     {
@@ -140,6 +148,8 @@ public class WinesController {
     {
         brandRepository.save(new Brand(input));
     }
+
+    // Countries part
 
     @RequestMapping("/country")
     public List<Country> getCountries()
