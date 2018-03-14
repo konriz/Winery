@@ -3,6 +3,7 @@ package com.wineyard.winery.controller;
 import com.wineyard.winery.entity.*;
 import com.wineyard.winery.exceptions.NoItemException;
 import com.wineyard.winery.repository.BrandRepository;
+import com.wineyard.winery.repository.CountryRepository;
 import com.wineyard.winery.repository.WineRepository;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class WinesController {
 
     @Autowired
     private BrandRepository brandRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -127,8 +131,7 @@ public class WinesController {
     @RequestMapping(value = "/brand", method = RequestMethod.POST)
     public void addBrand(@RequestParam(name = "brand") String input)
     {
-        Brand brand = new Brand(input);
-        brandRepository.save(brand);
+        brandRepository.save(new Brand(input));
     }
 
     @RequestMapping("/country")
@@ -149,6 +152,12 @@ public class WinesController {
             returnList.add((Country) o);
         }
         return returnList;
+    }
+
+    @RequestMapping(value = "/country", method = RequestMethod.POST)
+    public void addCountry(@RequestParam(name = "country") String input)
+    {
+        countryRepository.save(new Country(input));
     }
 
     @RequestMapping("/error")

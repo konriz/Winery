@@ -23,4 +23,11 @@ public class Country {
     @JsonIgnore
     private List<Wine> wines;
 
+    private Country() {}
+
+    public Country(final String country)
+    {
+        this.country = country;
+    }
+
 }
