@@ -20,6 +20,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/wines")
@@ -36,6 +37,12 @@ public class WinesController {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+//    @RequestMapping(params = {"id", "brand", "colour", "taste"})
+//    public String getWines(@RequestParam(required = false) Map<String, String> queryMap)
+//    {
+//        body...
+//    }
 
     @GetMapping
     public String getWinesHTML() {
