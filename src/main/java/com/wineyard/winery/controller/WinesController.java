@@ -38,15 +38,25 @@ public class WinesController {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @RequestMapping(params = {"id", "brand", "colour", "taste"})
-//    public String getWines(@RequestParam(required = false) Map<String, String> queryMap)
-//    {
-//        body...
-//    }
 
     @GetMapping
     public String getWinesHTML() {
             return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
+    }
+
+    @PostMapping()
+    public void addWine(@RequestParam("name") String name, @RequestParam("brand") String brand,
+                        @RequestParam(value = "grapes", required = false) String grapes)
+    {
+        Wine wine = new Wine();
+        wine.setName(name);
+        wine.setBrand(brandRepository.findByBrand(brand));
+        if (grapes != null)
+        {
+            wine.setGrapes(grapesRepository.findByGrapes(grapes));
+        }
+
+        wineRepository.save(wine);
     }
 
     @RequestMapping("/taste/{taste}")

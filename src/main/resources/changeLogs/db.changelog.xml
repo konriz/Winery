@@ -69,4 +69,10 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="drinked" author="konriz">
+        <addColumn tableName="wines">
+            <column name="drinked" type="boolean"></column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

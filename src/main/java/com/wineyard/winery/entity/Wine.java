@@ -42,4 +42,6 @@ public class Wine {
     private Float alcohol;
     private Float volume;
 
+    private Boolean drinked;
+
 }
