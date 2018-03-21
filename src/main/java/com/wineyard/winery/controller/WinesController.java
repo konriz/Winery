@@ -2,10 +2,7 @@ package com.wineyard.winery.controller;
 
 import com.wineyard.winery.entity.*;
 import com.wineyard.winery.exceptions.NoItemException;
-import com.wineyard.winery.repository.BrandRepository;
-import com.wineyard.winery.repository.CountryRepository;
-import com.wineyard.winery.repository.GrapesRepository;
-import com.wineyard.winery.repository.WineRepository;
+import com.wineyard.winery.repository.*;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +32,12 @@ public class WinesController {
     @Autowired
     private GrapesRepository grapesRepository;
 
+    @Autowired
+    private ColourRepository colourRepository;
+
+    @Autowired
+    private TasteRepository tasteRepository;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -46,7 +49,14 @@ public class WinesController {
 
     @PostMapping()
     public void addWine(@RequestParam("name") String name, @RequestParam("brand") String brand,
-                        @RequestParam(value = "grapes", required = false) String grapes)
+                        @RequestParam(value = "grapes", required = false) String grapes,
+                        @RequestParam(value = "colour", required = false) String colour,
+                        @RequestParam(value = "taste", required = false) String taste,
+                        @RequestParam(value = "country", required = false) String country,
+                        @RequestParam(value = "year", required = false) String year,
+                        @RequestParam(value = "alcohol", required = false) String alcohol,
+                        @RequestParam(value = "volume", required = false) String volume,
+                        @RequestParam(value = "drinked", required = false) Boolean drinked)
     {
         Wine wine = new Wine();
         wine.setName(name);
@@ -55,8 +65,43 @@ public class WinesController {
         {
             wine.setGrapes(grapesRepository.findByGrapes(grapes));
         }
+        if (colour != null)
+        {
+            wine.setColour(colourRepository.findByColour(colour));
+        }
+        if (taste != null)
+        {
+            wine.setTaste(tasteRepository.findByTaste(taste));
+        }
+        if (country != null)
+        {
+            wine.setCountry(countryRepository.findByCountry(country));
+        }
+        if (year != null)
+        {
+            wine.setYear(Integer.valueOf(year));
+        }
+        if (alcohol != null)
+        {
+            wine.setAlcohol(Float.valueOf(alcohol));
+        }
+        if (volume != null)
+        {
+            wine.setVolume(Float.valueOf(volume));
+        }
+        if (drinked)
+        {
+            wine.setDrinked(drinked);
+        }
 
         wineRepository.save(wine);
+    }
+
+
+    @PostMapping("/delete")
+    public void deleteWine(@RequestParam("name") String name, @RequestParam("brand") String brand)
+    {
+        wineRepository.deleteWineFromApp(name, brandRepository.findByBrand(brand).getBrandID());
     }
 
     @RequestMapping("/taste/{taste}")
@@ -68,21 +113,7 @@ public class WinesController {
     @RequestMapping("/taste")
     public List<Taste> getTastes()
     {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<Object> cq = cb.createQuery();
-        Root<Taste> from = cq.from(Taste.class);
-
-        CriteriaQuery<Object> select = cq.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<Object> resultList = typedQuery.getResultList();
-
-        List<Taste> returnList = new ArrayList<>();
-        for(Object o : resultList)
-        {
-            returnList.add((Taste) o);
-        }
-        return returnList;
+        return tasteRepository.findAll();
     }
 
     @RequestMapping("/colour/{colour}")
@@ -94,21 +125,7 @@ public class WinesController {
     @RequestMapping("/colour")
     public List<Colour> getColours()
     {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<Object> cq = cb.createQuery();
-        Root<Colour> from = cq.from(Colour.class);
-
-        CriteriaQuery<Object> select = cq.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<Object> resultList = typedQuery.getResultList();
-
-        List<Colour> returnList = new ArrayList<>();
-        for(Object o : resultList)
-        {
-            returnList.add((Colour) o);
-        }
-        return returnList;
+        return colourRepository.findAll();
     }
 
     @RequestMapping("/all")
@@ -122,21 +139,7 @@ public class WinesController {
     @RequestMapping("/grapes")
     public List<Grapes> getGrapes()
     {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<Object> cq = cb.createQuery();
-        Root<Grapes> from = cq.from(Grapes.class);
-
-        CriteriaQuery<Object> select = cq.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<Object> resultList = typedQuery.getResultList();
-
-        List<Grapes> returnList = new ArrayList<>();
-        for(Object o : resultList)
-        {
-            returnList.add((Grapes) o);
-        }
-        return returnList;
+        return grapesRepository.findAll();
     }
 
     @RequestMapping(value = "/grapes", method = RequestMethod.POST)
@@ -164,21 +167,7 @@ public class WinesController {
     @RequestMapping("/country")
     public List<Country> getCountries()
     {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<Object> cq = cb.createQuery();
-        Root<Country> from = cq.from(Country.class);
-
-        CriteriaQuery<Object> select = cq.select(from);
-        TypedQuery<Object> typedQuery = entityManager.createQuery(select);
-        List<Object> resultList = typedQuery.getResultList();
-
-        List<Country> returnList = new ArrayList<>();
-        for(Object o : resultList)
-        {
-            returnList.add((Country) o);
-        }
-        return returnList;
+        return countryRepository.findAll();
     }
 
     @RequestMapping(value = "/country", method = RequestMethod.POST)
