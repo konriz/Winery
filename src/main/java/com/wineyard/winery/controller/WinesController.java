@@ -79,15 +79,33 @@ public class WinesController {
         }
         if (year != null)
         {
-            wine.setYear(Integer.valueOf(year));
+            try {
+                    wine.setYear(Integer.valueOf(year));
+                }
+                catch (NumberFormatException e)
+                {
+                    wine.setYear(null);
+                }
         }
         if (alcohol != null)
         {
-            wine.setAlcohol(Float.valueOf(alcohol));
+            try {
+                wine.setAlcohol(Float.valueOf(alcohol));
+            }
+            catch (NumberFormatException e)
+            {
+                wine.setAlcohol(null);
+            }
         }
         if (volume != null)
         {
-            wine.setVolume(Float.valueOf(volume));
+            try {
+                wine.setVolume(Float.valueOf(volume));
+            }
+            catch (NumberFormatException e)
+            {
+                wine.setVolume(null);
+            }
         }
         if (drinked)
         {
