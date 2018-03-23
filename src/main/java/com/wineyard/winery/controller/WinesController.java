@@ -80,12 +80,12 @@ public class WinesController {
         if (year != null)
         {
             try {
-                    wine.setYear(Integer.valueOf(year));
-                }
-                catch (NumberFormatException e)
-                {
-                    wine.setYear(null);
-                }
+                wine.setYear(Integer.valueOf(year));
+            }
+            catch (NumberFormatException e)
+            {
+//              wine.setYear(null);
+            }
         }
         if (alcohol != null)
         {
@@ -94,7 +94,7 @@ public class WinesController {
             }
             catch (NumberFormatException e)
             {
-                wine.setAlcohol(null);
+//                wine.setAlcohol(null);
             }
         }
         if (volume != null)
@@ -104,7 +104,7 @@ public class WinesController {
             }
             catch (NumberFormatException e)
             {
-                wine.setVolume(null);
+//                wine.setVolume(null);
             }
         }
         if (drinked)
