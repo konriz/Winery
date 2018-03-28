@@ -47,73 +47,80 @@ public class WinesController {
             return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
-    @PostMapping()
-    public void addWine(@RequestParam("name") String name, @RequestParam("brand") String brand,
-                        @RequestParam(value = "grapes", required = false) String grapes,
-                        @RequestParam(value = "colour", required = false) String colour,
-                        @RequestParam(value = "taste", required = false) String taste,
-                        @RequestParam(value = "country", required = false) String country,
-                        @RequestParam(value = "year", required = false) String year,
-                        @RequestParam(value = "alcohol", required = false) String alcohol,
-                        @RequestParam(value = "volume", required = false) String volume,
-                        @RequestParam(value = "drinked", required = false) Boolean drinked)
+    @PostMapping
+    public void addWine(@RequestBody WineDTO wineDTO)
     {
-        Wine wine = new Wine();
-        wine.setName(name);
-        wine.setBrand(brandRepository.findByBrand(brand));
-        if (grapes != null)
-        {
-            wine.setGrapes(grapesRepository.findByGrapes(grapes));
-        }
-        if (colour != null)
-        {
-            wine.setColour(colourRepository.findByColour(colour));
-        }
-        if (taste != null)
-        {
-            wine.setTaste(tasteRepository.findByTaste(taste));
-        }
-        if (country != null)
-        {
-            wine.setCountry(countryRepository.findByCountry(country));
-        }
-        if (year != null)
-        {
-            try {
-                wine.setYear(Integer.valueOf(year));
-            }
-            catch (NumberFormatException e)
-            {
-//              wine.setYear(null);
-            }
-        }
-        if (alcohol != null)
-        {
-            try {
-                wine.setAlcohol(Float.valueOf(alcohol));
-            }
-            catch (NumberFormatException e)
-            {
-//                wine.setAlcohol(null);
-            }
-        }
-        if (volume != null)
-        {
-            try {
-                wine.setVolume(Float.valueOf(volume));
-            }
-            catch (NumberFormatException e)
-            {
-//                wine.setVolume(null);
-            }
-        }
-        if (drinked)
-        {
-            wine.setDrinked(drinked);
-        }
-
-        wineRepository.save(wine);
+        System.out.println(wineDTO.getName());
     }
+
+
+//    @PostMapping()
+//    public void addWine(@RequestParam("name") String name, @RequestParam("brand") String brand,
+//                        @RequestParam(value = "grapes", required = false) String grapes,
+//                        @RequestParam(value = "colour", required = false) String colour,
+//                        @RequestParam(value = "taste", required = false) String taste,
+//                        @RequestParam(value = "country", required = false) String country,
+//                        @RequestParam(value = "year", required = false) String year,
+//                        @RequestParam(value = "alcohol", required = false) String alcohol,
+//                        @RequestParam(value = "volume", required = false) String volume,
+//                        @RequestParam(value = "drinked", required = false) Boolean drinked)
+//    {
+//        Wine wine = new Wine();
+//        wine.setName(name);
+//        wine.setBrand(brandRepository.findByBrand(brand));
+//        if (grapes != null)
+//        {
+//            wine.setGrapes(grapesRepository.findByGrapes(grapes));
+//        }
+//        if (colour != null)
+//        {
+//            wine.setColour(colourRepository.findByColour(colour));
+//        }
+//        if (taste != null)
+//        {
+//            wine.setTaste(tasteRepository.findByTaste(taste));
+//        }
+//        if (country != null)
+//        {
+//            wine.setCountry(countryRepository.findByCountry(country));
+//        }
+//        if (year != null)
+//        {
+//            try {
+//                wine.setYear(Integer.valueOf(year));
+//            }
+//            catch (NumberFormatException e)
+//            {
+////              wine.setYear(null);
+//            }
+//        }
+//        if (alcohol != null)
+//        {
+//            try {
+//                wine.setAlcohol(Float.valueOf(alcohol));
+//            }
+//            catch (NumberFormatException e)
+//            {
+////                wine.setAlcohol(null);
+//            }
+//        }
+//        if (volume != null)
+//        {
+//            try {
+//                wine.setVolume(Float.valueOf(volume));
+//            }
+//            catch (NumberFormatException e)
+//            {
+////                wine.setVolume(null);
+//            }
+//        }
+//        if (drinked)
+//        {
+//            wine.setDrinked(drinked);
+//        }
+//
+//        wineRepository.save(wine);
+//    }
 
 
     @PostMapping("/delete")
