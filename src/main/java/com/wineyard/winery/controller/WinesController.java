@@ -48,9 +48,9 @@ public class WinesController {
     }
 
     @PostMapping
-    public void addWine(@RequestBody WineDTO wineDTO)
+    public void addWine(@RequestBody String wineDTO)
     {
-        System.out.println(wineDTO.getName());
+        System.out.println(wineDTO);
     }
 
 
