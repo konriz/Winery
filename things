@@ -11,8 +11,22 @@ zamiast @Entity encja stworzona jako @Subselect
 sql : LAG ... OVER
 
 projekcja
-ControllerAdvise
+ControllerAdvice
 aspekty, metody aspektowe
 
 logger zapinamy adnotacją @Slf4j
 wywołanie log. xxx
+
+ModelAttribute
+ResponseBody
+
+Timer
+TimerTask
+
+Trigger (database)
+EntityListener
+
+Nvers
+@Audited - przechowuje historię encji
+@NOAudited - wyklucza z przechowywania
+
