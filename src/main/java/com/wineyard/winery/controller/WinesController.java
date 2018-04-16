@@ -49,19 +49,8 @@ public class WinesController {
             return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
-//    @PostMapping
-//    public void addWine(@RequestBody String wineJSON)
-//    {
-//        try {
-//            Wine newWine = new Wine(wineJSON);
-//            wineRepository.save(newWine);
-//        }
-//
-//        System.out.println(wineJSON);
-//    }
-
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    private ResponseEntity<Wine> getTestData(@RequestBody Wine wine)
+    @RequestMapping(method = RequestMethod.POST)
+    private ResponseEntity<Wine> addWine(@RequestBody Wine wine)
     {
         return new ResponseEntity<>(wine, HttpStatus.OK);
     }
