@@ -53,6 +53,7 @@ public class WinesController {
     private ResponseEntity<Wine> addWine(@RequestBody Wine wine)
     {
         // if wine valid
+        wine.setBrand(brandRepository.findByBrand(wine.getBrand().getBrand()));
         wineRepository.save(wine);
         return new ResponseEntity<>(wine, HttpStatus.OK);
         // else throw exception
