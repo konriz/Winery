@@ -52,6 +52,7 @@ public class WinesController {
     @RequestMapping(method = RequestMethod.POST)
     private ResponseEntity<Wine> addWine(@RequestBody Wine wine)
     {
+        System.out.println(wine.getName());
         return new ResponseEntity<>(wine, HttpStatus.OK);
     }
 
