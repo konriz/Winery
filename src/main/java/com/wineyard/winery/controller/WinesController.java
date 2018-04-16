@@ -60,11 +60,10 @@ public class WinesController {
 //        System.out.println(wineJSON);
 //    }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    private ResponseEntity<Wine> getTestData()
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    private ResponseEntity<Wine> getTestData(@RequestBody Wine wine)
     {
-        Wine returnWine = wineRepository.getOne(0);
-        return new ResponseEntity<>(returnWine, HttpStatus.OK);
+        return new ResponseEntity<>(wine, HttpStatus.OK);
     }
 
 
