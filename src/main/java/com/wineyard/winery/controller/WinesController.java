@@ -52,10 +52,11 @@ public class WinesController {
     @RequestMapping(method = RequestMethod.POST)
     private ResponseEntity<Wine> addWine(@RequestBody Wine wine)
     {
-        System.out.println(wine.getName());
+        // if wine valid
+        wineRepository.save(wine);
         return new ResponseEntity<>(wine, HttpStatus.OK);
+        // else throw exception
     }
-
 
 
 //    @PostMapping()
