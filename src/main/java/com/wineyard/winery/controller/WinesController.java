@@ -5,6 +5,8 @@ import com.wineyard.winery.exceptions.NoItemException;
 import com.wineyard.winery.repository.*;
 import com.wineyard.winery.tools.HTMLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
@@ -47,10 +49,14 @@ public class WinesController {
             return HTMLBuilder.getWinesHTML("All", wineRepository.findAllDTO());
     }
 
-    @PostMapping
-    public void addWine(@RequestBody String wineDTO)
+    @RequestMapping(method = RequestMethod.POST)
+    private ResponseEntity<Wine> addWine(@RequestBody Wine wine)
     {
-        System.out.println(wineDTO);
+        // if wine valid
+        wine.setBrand(brandRepository.findByBrand(wine.getBrand().getBrand()));
+        wineRepository.save(wine);
+        return new ResponseEntity<>(wine, HttpStatus.OK);
+        // else throw exception
     }
 
 
